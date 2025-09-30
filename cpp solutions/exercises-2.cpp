@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <ctime>
+#include <functional>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ public:
     Path(int idx, string s) : idx(idx), s(s) {}
 };
 
-void printAllValidParanthesis(int n)
+void printAllValidParanthesisBFS(int n)
 {
     queue<Path> q;
     q.push(Path(0, "", 0));
@@ -63,9 +64,35 @@ void printAllValidParanthesis(int n)
     }
 }
 
+void printAllValidParanthesisDFS(int n)
+{
+    const int end = 2 * n;
+    string s(end, '(');
+
+    function<void(int, int)> dfs = [&](int idx, int bal)
+    {
+        if (idx == end)
+        {
+            if (bal == 0)
+                cout << s << endl;
+            return;
+        }
+
+        if (bal < 0 || bal > end - idx)
+            return;
+
+        s[idx] = '(';
+        dfs(idx + 1, bal + 1);
+        s[idx] = ')';
+        dfs(idx + 1, bal - 1);
+    };
+
+    dfs(0, 0);
+}
+
 int main()
 {
-    printAllValidParanthesis(2);
+    printAllValidParanthesisDFS(20);
 
-    // should pring (2n choose n)/(n+1) expressions
+    // should print (2n choose n)/(n+1) expressions
 }

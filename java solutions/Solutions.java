@@ -43,6 +43,8 @@ public class Solutions {
     }
 
     // --------------------2------------------------
+
+    // --------------------- BFS
     static class Path {
         public int idx;
         public String s;
@@ -56,7 +58,7 @@ public class Solutions {
         }
     };
 
-    static void printAllValidParanthesis(int n) {
+    static void printAllValidParanthesisBFS(int n) {
         Queue<Path> q = new LinkedList<>();
         q.add(new Path(0, "", 0));
         final int end = 2 * n;
@@ -94,6 +96,28 @@ public class Solutions {
             }
         }
     }
+
+    // --------------------- DFS Recursive
+    static void printAllValidParanthesisDFS(int n) {
+        char[] s = new char[2 * n];
+        dfs(0, 0, s);
+    }
+
+    static void dfs(int idx, int bal, char[] s) {
+        if (idx == s.length) {
+            if (bal == 0)
+                System.out.println(new String(s));
+            return;
+        }
+
+        if (bal < 0 || bal > s.length - idx)
+            return;
+
+        s[idx] = '(';
+        dfs(idx + 1, bal + 1, s);
+        s[idx] = ')';
+        dfs(idx + 1, bal - 1, s);
+    };
 
     // --------------------3-----------------------
     static List<Integer> merge(List<Integer> A, List<Integer> B) {
@@ -160,7 +184,8 @@ public class Solutions {
         System.out.println(palindromeAfterLetterDeletion("afga"));
 
         // 2
-        printAllValidParanthesis(2);
+        // printAllValidParanthesisBFS(2);
+        printAllValidParanthesisDFS(2);
 
         // 3
         List<Integer> res = merge(
