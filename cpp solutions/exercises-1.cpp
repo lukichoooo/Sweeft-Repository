@@ -48,8 +48,6 @@ string palindromeAfterLetterDeletion(string &s)
     return "YES";
 }
 
-// 2
-
 int main()
 {
     // generate tests
